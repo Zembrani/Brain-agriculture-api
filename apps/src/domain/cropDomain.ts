@@ -8,6 +8,9 @@ export class Crop {
 }
 
 export class CreateCropDTO {
+  @IsString()
+  @IsDefined()
+  farm_id;
   @IsNumber()
   @IsDefined()
   year;
