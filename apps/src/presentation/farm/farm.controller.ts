@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UsePipes,
 } from "@nestjs/common";
 import type { IFarmService } from "../../application/services/farm/farm.interface";
 import {
@@ -15,6 +16,7 @@ import {
   FarmParamDTO,
   UpdateFarmDTO,
 } from "../../domain/farmDomain";
+import { ValidationArea } from "apps/src/utils/validators/area.validation";
 
 @Controller("farm")
 export class FarmController {
@@ -26,14 +28,14 @@ export class FarmController {
   }
 
   @Post()
-  async create(@Body() body: CreateFarmDTO): Promise<Farm> {
+  async create(@Body(new ValidationArea()) body: CreateFarmDTO): Promise<Farm> {
     return await this.farmService.create(body);
   }
 
   @Put(":id")
   async update(
     @Param() param: FarmParamDTO,
-    @Body() body: UpdateFarmDTO,
+    @Body(new ValidationArea()) body: UpdateFarmDTO,
   ): Promise<Farm> {
     return await this.farmService.update(param.id, body);
   }

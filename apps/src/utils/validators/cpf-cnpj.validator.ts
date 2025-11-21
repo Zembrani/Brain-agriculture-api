@@ -13,7 +13,7 @@ export class CpfCnpjConstraint implements ValidatorConstraintInterface {
     if (typeof documentValue !== 'string') {
       return false;
     }
-    // Remove caracteres não numéricos antes de validar
+
     const cleanedValue = documentValue.replace(/\D/g, '');
 
     return cpf.isValid(cleanedValue) || cnpj.isValid(cleanedValue);
