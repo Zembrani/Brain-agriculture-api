@@ -17,6 +17,7 @@ describe("FarmService", () => {
   const genericFarm = {
     id: "1",
     producer_id: "1",
+    name: "Fazenda São João",
     city: "São Paulo",
     state: "SP",
     totalArea: 1000,
@@ -61,6 +62,7 @@ describe("FarmService", () => {
     it("should call farmRepository.create and return the created farm", async () => {
       const createDto: CreateFarmDTO = {
         producer_id: "1",
+        name: "Fazenda São João",
         city: "São Paulo",
         state: "SP",
         totalArea: 1000,
@@ -99,6 +101,7 @@ describe("FarmService", () => {
 
     it("should throw NotFoundException when farm does not exist", async () => {
       const updateDto: UpdateFarmDTO = {
+        name: "Fazenda São João Atualizada",
         totalArea: 1200,
         productiveArea: 800,
         nonProductiveArea: 400,

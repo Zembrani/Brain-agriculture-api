@@ -16,6 +16,7 @@ const mockFarmService = {
 const genericFarm = {
   id: "1",
   producer_id: "1",
+  name: "Fazenda São João",
   city: "São Paulo",
   state: "SP",
   totalArea: 1000,
@@ -60,6 +61,7 @@ describe("FarmController", () => {
     it("should call farmService.create and return its result", async () => {
       const createDto: CreateFarmDTO = {
         producer_id: "1",
+        name: "Fazenda São João",
         city: "São Paulo",
         state: "SP",
         totalArea: 1000,
@@ -78,6 +80,7 @@ describe("FarmController", () => {
   describe("update", () => {
     it("should call farmService.update and return its result", async () => {
       const updateDto: UpdateFarmDTO = {
+        name: "Fazenda São João Atualizada",
         totalArea: 1200,
         productiveArea: 800,
         nonProductiveArea: 400,

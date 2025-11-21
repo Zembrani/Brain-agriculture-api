@@ -10,6 +10,9 @@ export class FarmEntity {
   producer_id: string;
 
   @Column()
+  name: string;
+
+  @Column()
   city: string;
 
   @Column()

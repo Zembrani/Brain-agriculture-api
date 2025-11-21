@@ -12,6 +12,7 @@ describe('FarmRepository', () => {
   const mockFarm = {
     id: '1',
     producer_id: '1',
+    name: 'Fazenda São João',
     city: 'São Paulo',
     state: 'SP',
     totalArea: 1000,
@@ -89,6 +90,7 @@ describe('FarmRepository', () => {
     it('should create and return a farm', async () => {
       const createDto: CreateFarmDTO = {
         producer_id: '1',
+        name: 'Fazenda São João',
         city: 'São Paulo',
         state: 'SP',
         totalArea: 1000,
@@ -107,6 +109,7 @@ describe('FarmRepository', () => {
   describe('update', () => {
     it('should update and return a farm', async () => {
       const updateDto: UpdateFarmDTO = {
+        name: 'Fazenda São João Atualizada',
         totalArea: 1200,
         productiveArea: 800,
         nonProductiveArea: 400,

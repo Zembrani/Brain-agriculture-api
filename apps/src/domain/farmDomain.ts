@@ -3,6 +3,7 @@ import { IsDefined, IsNumber, IsOptional, IsString, NotContains } from "class-va
 export class Farm {
   id: string;
   producer_id: string;
+  name: string;
   city: string;
   state: string;
   totalArea: number;
@@ -22,6 +23,9 @@ export class CreateFarmDTO {
   producer_id;
   @IsString()
   @IsDefined()
+  name;
+  @IsString()
+  @IsDefined()
   city;
   @IsString()
   @IsDefined()
@@ -38,6 +42,9 @@ export class CreateFarmDTO {
 }
 
 export class UpdateFarmDTO {
+  @IsString()
+  @IsOptional()
+  name;
   @IsNumber()
   @IsOptional()
   totalArea;
