@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Put,
-  UsePipes,
 } from "@nestjs/common";
 import type { IFarmService } from "../../application/services/farm/farm.interface";
 import {
@@ -16,7 +15,7 @@ import {
   FarmParamDTO,
   UpdateFarmDTO,
 } from "../../domain/farmDomain";
-import { ValidationArea } from "apps/src/utils/validators/area.validation";
+import { ValidationArea } from "../../utils/validators/area.validation";
 
 @Controller("farm")
 export class FarmController {
