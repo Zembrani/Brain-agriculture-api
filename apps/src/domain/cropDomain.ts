@@ -2,6 +2,7 @@ import { IsDefined, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class Crop {
   id: string;
+  farm_id: string;
   year: number;
   crop: string;
 }

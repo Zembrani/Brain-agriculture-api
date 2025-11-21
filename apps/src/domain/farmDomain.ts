@@ -2,6 +2,7 @@ import { IsDefined, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class Farm {
   id: string;
+  producer_id: string;
   city: string;
   state: string;
   totalArea: number;

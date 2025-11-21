@@ -1,10 +1,11 @@
-import { IsDefined, IsOptional, IsString } from "class-validator";
+import { IsDefined, IsEnum, IsOptional, IsString } from "class-validator";
 
 export class Producer {
   id: string;
   cpfCnpj: string;
   name: string;
   phone: string;
+  personType: "FISICA" | "JURIDICA";
 }
 
 export class ParamProducerDTO {
@@ -23,6 +24,9 @@ export class CreateProducerDTO {
   @IsString()
   @IsDefined()
   phone;
+  @IsEnum(["FISICA", "JURIDICA"])
+  @IsDefined()
+  personType;
 }
 
 export class UpdateProducerDTO {
@@ -35,4 +39,7 @@ export class UpdateProducerDTO {
   @IsString()
   @IsOptional()
   phone;
+  @IsEnum(["FISICA", "JURIDICA"])
+  @IsDefined()
+  personType;
 }
