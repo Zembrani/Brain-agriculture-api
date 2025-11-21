@@ -1,4 +1,5 @@
 import { IsDefined, IsEnum, IsOptional, IsString } from "class-validator";
+import { IsCpfCnpj } from "../utils/validators/cpf-cnpj.validator";
 
 export class Producer {
   id: string;
@@ -17,6 +18,7 @@ export class ParamProducerDTO {
 export class CreateProducerDTO {
   @IsString()
   @IsDefined()
+  @IsCpfCnpj({ message: 'O documento precisa ser um CPF ou CNPJ válido' })
   cpfCnpj;
   @IsString()
   @IsDefined()
