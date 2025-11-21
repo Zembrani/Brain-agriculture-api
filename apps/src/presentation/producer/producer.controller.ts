@@ -29,7 +29,6 @@ export class ProducerController {
 
   @Post()
   async create(@Body() body: CreateProducerDTO): Promise<Producer> {
-    console.log('\n body = ', body);
     return await this.producerService.create(body);
   }
 

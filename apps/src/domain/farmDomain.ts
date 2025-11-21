@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDefined, IsNumber, IsOptional, IsString, NotContains } from "class-validator";
 
 export class Farm {
   id: string;
@@ -17,6 +17,9 @@ export class FarmParamDTO {
 }
 
 export class CreateFarmDTO {
+  @IsString()
+  @IsDefined()
+  producer_id;
   @IsString()
   @IsDefined()
   city;
