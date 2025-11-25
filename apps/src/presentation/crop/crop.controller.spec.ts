@@ -1,15 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { CropController } from './crop.controller';
-import { CreateCropDTO } from 'apps/src/domain/cropDomain';
+import { Test, TestingModule } from "@nestjs/testing";
+import { CropController } from "./crop.controller";
+import { CreateCropDTO } from "apps/src/domain/cropDomain";
 
 const mockCropService = {
   getAll: jest.fn(),
   create: jest.fn(),
 };
 
-const genericCrop = { id: '1', farm_id: '1', year: 2025, crop: 'Wheat' };
+const genericCrop = { id: "1", farm_id: "1", year: 2025, crop: "Wheat" };
 
-describe('CropController', () => {
+describe("CropController", () => {
   let controller: CropController;
 
   beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('CropController', () => {
       controllers: [CropController],
       providers: [
         {
-          provide: 'ICropService',
+          provide: "ICropService",
           useValue: mockCropService,
         },
       ],
@@ -26,12 +26,12 @@ describe('CropController', () => {
     controller = module.get<CropController>(CropController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getAll', () => {
-    it('should call cropService.getAll and return its result', async () => {
+  describe("getAll", () => {
+    it("should call cropService.getAll and return its result", async () => {
       mockCropService.getAll.mockResolvedValue(genericCrop);
 
       const result = await controller.getAll();
@@ -41,8 +41,8 @@ describe('CropController', () => {
     });
   });
 
-  describe('create', () => {
-    it('should call cropService.create and return its result', async () => {
+  describe("create", () => {
+    it("should call cropService.create and return its result", async () => {
       mockCropService.create.mockResolvedValue(genericCrop);
 
       const result = await controller.create(genericCrop as CreateCropDTO);

@@ -17,13 +17,13 @@ export class ProducerRepository implements IProducerRepository {
   ) {}
 
   async getAll(): Promise<Producer[]> {
-    return await this.producerRepository.find() as Producer[];
+    return (await this.producerRepository.find()) as Producer[];
   }
 
   async getById(id: string): Promise<Producer | undefined> {
     const producer = await this.producerRepository.findOne({ where: { id } });
 
-    return producer ? producer as Producer : undefined;
+    return producer ? (producer as Producer) : undefined;
   }
 
   async create(data: CreateProducerDTO): Promise<Producer> {

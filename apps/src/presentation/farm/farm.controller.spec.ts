@@ -90,7 +90,10 @@ describe("FarmController", () => {
 
       const result = await controller.update(genericParam, updateDto);
 
-      expect(mockFarmService.update).toHaveBeenCalledWith(genericParam.id, updateDto);
+      expect(mockFarmService.update).toHaveBeenCalledWith(
+        genericParam.id,
+        updateDto,
+      );
       expect(result).toEqual(updatedFarm);
     });
   });

@@ -1,4 +1,10 @@
-import { IsDefined, IsNumber, IsOptional, IsString, NotContains } from "class-validator";
+import {
+  IsDefined,
+  IsNumber,
+  IsOptional,
+  IsString,
+  NotContains,
+} from "class-validator";
 
 export class Farm {
   id: string;

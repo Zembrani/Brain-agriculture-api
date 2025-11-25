@@ -10,6 +10,7 @@ describe("FarmService", () => {
     getAll: jest.fn(),
     create: jest.fn(),
     getById: jest.fn(),
+    getFarmsByProducerId: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
   };
@@ -27,7 +28,10 @@ describe("FarmService", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FarmService, {provide: 'IFarmRepository', useValue: mockFarmRepository }],
+      providers: [
+        FarmService,
+        { provide: "IFarmRepository", useValue: mockFarmRepository },
+      ],
     }).compile();
 
     service = module.get<FarmService>(FarmService);
@@ -55,6 +59,39 @@ describe("FarmService", () => {
 
       expect(mockFarmRepository.getAll).toHaveBeenCalled();
       expect(result).toEqual([]);
+    });
+  });
+
+  describe("getTotalAreaByProducerId", () => {
+    it("should return total area when producer has farms", async () => {
+      const farms = [
+        { ...genericFarm, totalArea: 1000 },
+        { ...genericFarm, id: "2", totalArea: 2000 },
+      ];
+      mockFarmRepository.getFarmsByProducerId.mockResolvedValue(farms);
+
+      const result = await service.getTotalAreaByProducerId("1");
+
+      expect(mockFarmRepository.getFarmsByProducerId).toHaveBeenCalledWith("1");
+      expect(result).toBe(3000);
+    });
+
+    it("should return 0 when producer has no farms", async () => {
+      mockFarmRepository.getFarmsByProducerId.mockResolvedValue([]);
+
+      const result = await service.getTotalAreaByProducerId("1");
+
+      expect(mockFarmRepository.getFarmsByProducerId).toHaveBeenCalledWith("1");
+      expect(result).toBe(0);
+    });
+
+    it("should return 0 when getFarmsByProducerId returns null", async () => {
+      mockFarmRepository.getFarmsByProducerId.mockResolvedValue(null);
+
+      const result = await service.getTotalAreaByProducerId("1");
+
+      expect(mockFarmRepository.getFarmsByProducerId).toHaveBeenCalledWith("1");
+      expect(result).toBe(0);
     });
   });
 

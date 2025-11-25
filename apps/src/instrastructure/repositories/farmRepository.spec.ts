@@ -1,20 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { FarmRepository } from './farmRepository';
-import { Repository } from 'typeorm';
-import { FarmEntity } from '../entities/farmEntity';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreateFarmDTO, UpdateFarmDTO } from '../../domain/farmDomain';
+import { Test, TestingModule } from "@nestjs/testing";
+import { FarmRepository } from "./farmRepository";
+import { Repository } from "typeorm";
+import { FarmEntity } from "../entities/farmEntity";
+import { getRepositoryToken } from "@nestjs/typeorm";
+import { CreateFarmDTO, UpdateFarmDTO } from "../../domain/farmDomain";
 
-describe('FarmRepository', () => {
+describe("FarmRepository", () => {
   let repository: FarmRepository;
   let mockRepository: jest.Mocked<Repository<FarmEntity>>;
 
   const mockFarm = {
-    id: '1',
-    producer_id: '1',
-    name: 'Fazenda São João',
-    city: 'São Paulo',
-    state: 'SP',
+    id: "1",
+    producer_id: "1",
+    name: "Fazenda São João",
+    city: "São Paulo",
+    state: "SP",
     totalArea: 1000,
     productiveArea: 700,
     nonProductiveArea: 300,
@@ -42,12 +42,12 @@ describe('FarmRepository', () => {
     mockRepository = module.get(getRepositoryToken(FarmEntity));
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(repository).toBeDefined();
   });
 
-  describe('getAll', () => {
-    it('should return all farms', async () => {
+  describe("getAll", () => {
+    it("should return all farms", async () => {
       mockRepository.find.mockResolvedValue([mockFarm] as any);
 
       const result = await repository.getAll();
@@ -56,7 +56,7 @@ describe('FarmRepository', () => {
       expect(result).toEqual([mockFarm]);
     });
 
-    it('should return empty array when no farms exist', async () => {
+    it("should return empty array when no farms exist", async () => {
       mockRepository.find.mockResolvedValue([]);
 
       const result = await repository.getAll();
@@ -66,33 +66,37 @@ describe('FarmRepository', () => {
     });
   });
 
-  describe('getById', () => {
-    it('should return a farm by id', async () => {
+  describe("getById", () => {
+    it("should return a farm by id", async () => {
       mockRepository.findOne.mockResolvedValue(mockFarm as any);
 
-      const result = await repository.getById('1');
+      const result = await repository.getById("1");
 
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: '1' } });
+      expect(mockRepository.findOne).toHaveBeenCalledWith({
+        where: { id: "1" },
+      });
       expect(result).toEqual(mockFarm);
     });
 
-    it('should return undefined when farm not found', async () => {
+    it("should return undefined when farm not found", async () => {
       mockRepository.findOne.mockResolvedValue(null);
 
-      const result = await repository.getById('999');
+      const result = await repository.getById("999");
 
-      expect(mockRepository.findOne).toHaveBeenCalledWith({ where: { id: '999' } });
+      expect(mockRepository.findOne).toHaveBeenCalledWith({
+        where: { id: "999" },
+      });
       expect(result).toBeUndefined();
     });
   });
 
-  describe('create', () => {
-    it('should create and return a farm', async () => {
+  describe("create", () => {
+    it("should create and return a farm", async () => {
       const createDto: CreateFarmDTO = {
-        producer_id: '1',
-        name: 'Fazenda São João',
-        city: 'São Paulo',
-        state: 'SP',
+        producer_id: "1",
+        name: "Fazenda São João",
+        city: "São Paulo",
+        state: "SP",
         totalArea: 1000,
         productiveArea: 700,
         nonProductiveArea: 300,
@@ -106,10 +110,10 @@ describe('FarmRepository', () => {
     });
   });
 
-  describe('update', () => {
-    it('should update and return a farm', async () => {
+  describe("update", () => {
+    it("should update and return a farm", async () => {
       const updateDto: UpdateFarmDTO = {
-        name: 'Fazenda São João Atualizada',
+        name: "Fazenda São João Atualizada",
         totalArea: 1200,
         productiveArea: 800,
         nonProductiveArea: 400,
@@ -124,13 +128,37 @@ describe('FarmRepository', () => {
     });
   });
 
-  describe('delete', () => {
-    it('should delete a farm by id', async () => {
+  describe("delete", () => {
+    it("should delete a farm by id", async () => {
       mockRepository.delete.mockResolvedValue({ affected: 1 } as any);
 
-      await repository.delete('1');
+      await repository.delete("1");
 
-      expect(mockRepository.delete).toHaveBeenCalledWith('1');
+      expect(mockRepository.delete).toHaveBeenCalledWith("1");
+    });
+  });
+
+  describe("getFarmsByProducerId", () => {
+    it("should return farms for a given producer id", async () => {
+      mockRepository.find.mockResolvedValue([mockFarm] as any);
+
+      const result = await repository.getFarmsByProducerId("1");
+
+      expect(mockRepository.find).toHaveBeenCalledWith({
+        where: { producer_id: "1" },
+      });
+      expect(result).toEqual([mockFarm]);
+    });
+
+    it("should return empty array when no farms found for producer", async () => {
+      mockRepository.find.mockResolvedValue([]);
+
+      const result = await repository.getFarmsByProducerId("999");
+
+      expect(mockRepository.find).toHaveBeenCalledWith({
+        where: { producer_id: "999" },
+      });
+      expect(result).toEqual([]);
     });
   });
 });

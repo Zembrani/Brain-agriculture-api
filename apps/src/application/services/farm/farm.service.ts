@@ -13,6 +13,16 @@ export class FarmService implements IFarmService {
     return await this.farmRepository.getAll();
   }
 
+  async getTotalAreaByProducerId(producerId: string): Promise<number> {
+    const farms = await this.farmRepository.getFarmsByProducerId(producerId);
+
+    if (!farms || farms.length === 0) {
+      return 0;
+    }
+
+    return farms.reduce((sum, farm) => sum + Number(farm.totalArea), 0);
+  }
+
   async create(data: CreateFarmDTO): Promise<Farm> {
     return await this.farmRepository.create(data);
   }

@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ProducerController } from "../presentation/producer/producer.controller";
 import { ProducerService } from "../application/services/producer/producer.service";
-import { ProducerRepository } from '../instrastructure/repositories/producerRespository';
+import { ProducerRepository } from "../instrastructure/repositories/producerRespository";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ProducerEntity } from "../instrastructure/entities/producerEntity";
+import { FarmModule } from "./farm.module";
 
 @Module({
   controllers: [ProducerController],
@@ -12,10 +13,7 @@ import { ProducerEntity } from "../instrastructure/entities/producerEntity";
     { provide: "IProducerService", useClass: ProducerService },
     ProducerRepository,
     { provide: "IProducerRepository", useClass: ProducerRepository },
-
   ],
-  imports: [
-    TypeOrmModule.forFeature([ProducerEntity])
-  ],
+  imports: [TypeOrmModule.forFeature([ProducerEntity]), FarmModule],
 })
 export class ProducerModule {}

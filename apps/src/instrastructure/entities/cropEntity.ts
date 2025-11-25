@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { FarmEntity } from "./farmEntity";
 
 @Entity("crop")
@@ -6,12 +12,13 @@ export class CropEntity {
   @PrimaryGeneratedColumn("identity")
   id: string;
 
-  @ManyToOne(() => FarmEntity, (farm) => farm.id, { onDelete: 'CASCADE' })
-  farm_id: string;
+  @ManyToOne(() => FarmEntity, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "farm_id" })
+  farm_id: FarmEntity;
 
   @Column({ type: "int" })
   year: number;
 
-  @Column()
+  @Column({ name: "crops" })
   crop: string;
 }

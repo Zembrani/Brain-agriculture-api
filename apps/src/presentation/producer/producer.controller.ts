@@ -27,6 +27,14 @@ export class ProducerController {
     return await this.producerService.getAll();
   }
 
+  @Get(":id/total-area")
+  async getTotalArea(
+    @Param() param: ParamProducerDTO,
+  ): Promise<{ totalArea: number }> {
+    const totalArea = await this.producerService.getTotalArea(param.id);
+    return { totalArea };
+  }
+
   @Post()
   async create(@Body() body: CreateProducerDTO): Promise<Producer> {
     return await this.producerService.create(body);

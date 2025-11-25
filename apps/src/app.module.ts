@@ -23,7 +23,7 @@ import { CropEntity } from "./instrastructure/entities/cropEntity";
       username: "pguser",
       password: "secret123",
       database: process.env.POSTGRES_DATABASE || "agriculture",
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
     }),
   ],

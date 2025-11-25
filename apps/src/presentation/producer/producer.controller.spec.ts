@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ProducerController } from './producer.controller';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ProducerController } from "./producer.controller";
 import {
   CreateProducerDTO,
   ParamProducerDTO,
-} from 'apps/src/domain/producerDomain';
+} from "apps/src/domain/producerDomain";
 
 const mockProducerService = {
   getAll: jest.fn(),
@@ -13,14 +13,14 @@ const mockProducerService = {
 };
 
 const genericProducer = {
-  cpfCnpj: '66.995.915/0001-92',
-  name: 'João da Silva',
-  phone: '91234-6548',
-  personType: 'JURIDICA',
+  cpfCnpj: "66.995.915/0001-92",
+  name: "João da Silva",
+  phone: "91234-6548",
+  personType: "JURIDICA",
 };
-const genericParam: ParamProducerDTO = { id: '1' };
+const genericParam: ParamProducerDTO = { id: "1" };
 
-describe('ProducerController', () => {
+describe("ProducerController", () => {
   let controller: ProducerController;
 
   beforeEach(async () => {
@@ -28,7 +28,7 @@ describe('ProducerController', () => {
       controllers: [ProducerController],
       providers: [
         {
-          provide: 'IProducerService',
+          provide: "IProducerService",
           useValue: mockProducerService,
         },
       ],
@@ -37,12 +37,12 @@ describe('ProducerController', () => {
     controller = module.get<ProducerController>(ProducerController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getAll', () => {
-    it('should call producerService.getAll and return its result', async () => {
+  describe("getAll", () => {
+    it("should call producerService.getAll and return its result", async () => {
       mockProducerService.getAll.mockResolvedValue(genericProducer);
 
       const result = await controller.getAll();
@@ -52,8 +52,8 @@ describe('ProducerController', () => {
     });
   });
 
-  describe('create', () => {
-    it('should call producerService.create and return its result', async () => {
+  describe("create", () => {
+    it("should call producerService.create and return its result", async () => {
       mockProducerService.create.mockResolvedValue(genericProducer);
 
       const result = await controller.create(genericProducer);
@@ -63,8 +63,8 @@ describe('ProducerController', () => {
     });
   });
 
-  describe('update', () => {
-    it('should call producerService.update and return its result', async () => {
+  describe("update", () => {
+    it("should call producerService.update and return its result", async () => {
       mockProducerService.update.mockResolvedValue(genericProducer);
 
       const result = await controller.update(genericParam, genericProducer);
@@ -74,14 +74,16 @@ describe('ProducerController', () => {
     });
   });
 
-  describe('delete', () => {
-    it('should call producerService.delete and return a success message', async () => {
+  describe("delete", () => {
+    it("should call producerService.delete and return a success message", async () => {
       mockProducerService.delete.mockResolvedValue(undefined);
 
       const result = await controller.delete(genericParam);
 
       expect(mockProducerService.delete).toHaveBeenCalled();
-      expect(result).toBe(`Producer id: ${genericParam.id} deleted succesfully.`);
+      expect(result).toBe(
+        `Producer id: ${genericParam.id} deleted succesfully.`,
+      );
     });
   });
 });

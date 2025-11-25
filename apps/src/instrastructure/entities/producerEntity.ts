@@ -1,17 +1,17 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { FarmEntity } from './farmEntity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { FarmEntity } from "./farmEntity";
 
 export enum PersonType {
-  FISICA = 'FISICA',
-  JURIDICA = 'JURIDICA',
+  FISICA = "FISICA",
+  JURIDICA = "JURIDICA",
 }
 
-@Entity('producer')
+@Entity("producer")
 export class ProducerEntity {
-  @PrimaryGeneratedColumn('identity')
+  @PrimaryGeneratedColumn("identity")
   id: string;
 
-  @Column()
+  @Column({ name: "cpfcnpj" })
   cpfCnpj: string;
 
   @Column()
@@ -21,7 +21,8 @@ export class ProducerEntity {
   phone: string;
 
   @Column({
-    type: 'enum',
+    name: "persontype",
+    type: "enum",
     enum: PersonType,
     default: PersonType.FISICA,
   })

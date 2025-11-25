@@ -1,5 +1,9 @@
-
-import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import {
+  PipeTransform,
+  Injectable,
+  ArgumentMetadata,
+  BadRequestException,
+} from "@nestjs/common";
 
 @Injectable()
 export class ValidationArea implements PipeTransform {
@@ -10,7 +14,7 @@ export class ValidationArea implements PipeTransform {
 
     if (totalArea !== undefined && sumAreas > totalArea) {
       throw new BadRequestException(
-        'A soma da área produtiva e não produtiva não pode ser maior que a área total.',
+        "A soma da área produtiva e não produtiva não pode ser maior que a área total.",
       );
     }
 

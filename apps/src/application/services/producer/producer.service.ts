@@ -6,16 +6,29 @@ import {
   UpdateProducerDTO,
 } from "../../../domain/producerDomain";
 import type { IProducerRepository } from "../../repository/producer/producer.interface";
+import type { IFarmService } from "../farm/farm.interface";
 
 @Injectable()
 export class ProducerService implements IProducerService {
   constructor(
     @Inject("IProducerRepository")
     private producerRepository: IProducerRepository,
+    @Inject("IFarmService")
+    private farmService: IFarmService,
   ) {}
 
   async getAll(): Promise<Producer[]> {
     return await this.producerRepository.getAll();
+  }
+
+  async getTotalArea(id: string): Promise<number> {
+    const producerExists = await this.producerRepository.getById(id);
+
+    if (!producerExists) {
+      throw new NotFoundException("Producer not found.");
+    }
+
+    return await this.farmService.getTotalAreaByProducerId(id);
   }
 
   async create(data: CreateProducerDTO): Promise<Producer> {

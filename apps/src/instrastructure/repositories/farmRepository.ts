@@ -33,4 +33,12 @@ export class FarmRepository implements IFarmRepository {
   async delete(id: string): Promise<void> {
     await this.farmRepository.delete(id);
   }
+
+  async getFarmsByProducerId(producerId: string): Promise<Farm[]> {
+    return await this.farmRepository.find({
+      where: {
+        producer_id: { id: producerId } as any,
+      },
+    });
+  }
 }

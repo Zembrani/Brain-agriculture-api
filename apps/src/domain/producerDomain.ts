@@ -18,7 +18,7 @@ export class ParamProducerDTO {
 export class CreateProducerDTO {
   @IsString()
   @IsDefined()
-  @IsCpfCnpj({ message: 'O documento precisa ser um CPF ou CNPJ válido' })
+  @IsCpfCnpj({ message: "O documento precisa ser um CPF ou CNPJ válido" })
   cpfCnpj;
   @IsString()
   @IsDefined()
