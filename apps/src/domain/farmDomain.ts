@@ -3,7 +3,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  NotContains,
 } from "class-validator";
 
 export class Farm {

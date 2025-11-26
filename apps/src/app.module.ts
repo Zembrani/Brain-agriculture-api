@@ -1,21 +1,18 @@
 import { Module } from "@nestjs/common";
 import { ProducerModule } from "./modules/producer.module";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { FarmModule } from "./modules/farm.module";
 import { CropModule } from "./modules/crop.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ProducerEntity } from "./instrastructure/entities/producerEntity";
-import { FarmEntity } from "./instrastructure/entities/farmEntity";
-import { CropEntity } from "./instrastructure/entities/cropEntity";
+import { DashboardModule } from "./modules/dashboard.module";
 
 @Module({
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
   imports: [
     ProducerModule,
     FarmModule,
     CropModule,
+    DashboardModule,
     TypeOrmModule.forRoot({
       type: "postgres",
       host: "localhost",
