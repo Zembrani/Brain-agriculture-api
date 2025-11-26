@@ -28,6 +28,105 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetProducersTotalArea",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/producer/1/total-area",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producer",
+								"1",
+								"total-area"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertProducer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cpfCnpj\": \"123456\",\n    \"name\": \"José da Silva\",\n    \"phone\": \"96543-6548\",\n    \"personType\": \"FISICA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/producer/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProducer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cpfCnpj\": \"123456\",\n    \"name\": \"José da Silva Novo\",\n    \"phone\": \"96543-6548\",\n    \"personType\": \"FISICA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/producer/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producer",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProducer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/producer/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producer",
+								"4"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -53,12 +152,131 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "InsertFarm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"producer_id\": \"5\",\n    \"city\": \"Joinville\",\n    \"state\": \"Santa Catarina\",\n    \"totalArea\": 10000,\n    \"productiveArea\": 5000,\n    \"nonProductiveArea\": 20000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/farm/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"farm",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateFarm",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"totalArea\": \"12000.00\",\n        \"productiveArea\": \"6000.00\",\n        \"nonProductiveArea\": \"3000.00\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/farm/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"farm",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteFarm",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"totalArea\": \"12000.00\",\n        \"productiveArea\": \"6000.00\",\n        \"nonProductiveArea\": \"3000.00\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/farm/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"farm",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "crop",
 			"item": [
+				{
+					"name": "GetCrop",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"farm_id\": \"2\",\n    \"year\": 2025,\n    \"crop\": \"corn\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/crop/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"crop",
+								""
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "InsertCrop",
 					"request": {
@@ -82,6 +300,31 @@
 							"port": "3000",
 							"path": [
 								"crop",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dashboard",
+			"item": [
+				{
+					"name": "getDashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/dashboard/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"dashboard",
 								""
 							]
 						}
