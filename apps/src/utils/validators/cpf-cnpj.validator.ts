@@ -3,13 +3,12 @@ import {
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationArguments,
 } from "class-validator";
 import { cpf, cnpj } from "cpf-cnpj-validator";
 
 @ValidatorConstraint({ async: false })
 export class CpfCnpjConstraint implements ValidatorConstraintInterface {
-  validate(documentValue: any, args: ValidationArguments) {
+  validate(documentValue: string): boolean {
     if (typeof documentValue !== "string") {
       return false;
     }
@@ -19,7 +18,7 @@ export class CpfCnpjConstraint implements ValidatorConstraintInterface {
     return cpf.isValid(cleanedValue) || cnpj.isValid(cleanedValue);
   }
 
-  defaultMessage(args: ValidationArguments) {
+  defaultMessage() {
     return "O CPF ou CNPJ informado é inválido";
   }
 }

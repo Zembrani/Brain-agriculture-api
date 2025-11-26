@@ -1,5 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { FarmEntity } from "./farmEntity";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum PersonType {
   FISICA = "FISICA",

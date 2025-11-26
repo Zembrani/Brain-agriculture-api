@@ -8,7 +8,7 @@ export class DashboardRepository implements IDashboardRepository {
   constructor(private readonly dashboardRepository: DataSource) {}
 
   async getDashboard(): Promise<Dashboard[]> {
-    const result = await this.dashboardRepository.query(`
+    const result = await this.dashboardRepository.query<Dashboard[]>(`
       SELECT
         f.id,
         f.state,
@@ -28,13 +28,6 @@ export class DashboardRepository implements IDashboardRepository {
       ORDER BY f.id
     `);
 
-    return result.map((row) => ({
-      id: row.id,
-      state: row.state,
-      totalArea: parseFloat(row.totalarea),
-      productiveArea: parseFloat(row.productivearea),
-      nonProductiveArea: parseFloat(row.nonproductivearea),
-      crops: row.crops,
-    }));
+    return result;
   }
 }

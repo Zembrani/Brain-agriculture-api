@@ -1,13 +1,14 @@
-import {
-  PipeTransform,
-  Injectable,
-  ArgumentMetadata,
-  BadRequestException,
-} from "@nestjs/common";
+import { PipeTransform, Injectable, BadRequestException } from "@nestjs/common";
+
+interface AreaValues {
+  totalArea?: number;
+  productiveArea?: number;
+  nonProductiveArea?: number;
+}
 
 @Injectable()
 export class ValidationArea implements PipeTransform {
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: AreaValues): AreaValues {
     const { totalArea, productiveArea, nonProductiveArea } = value;
 
     const sumAreas = (productiveArea || 0) + (nonProductiveArea || 0);

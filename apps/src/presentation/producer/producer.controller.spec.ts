@@ -1,9 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ProducerController } from "./producer.controller";
-import {
-  CreateProducerDTO,
-  ParamProducerDTO,
-} from "apps/src/domain/producerDomain";
+import { ParamProducerDTO } from "apps/src/domain/producerDomain";
 
 const mockProducerService = {
   getAll: jest.fn(),

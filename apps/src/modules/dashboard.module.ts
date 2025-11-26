@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { DashboardController } from "../dashboard/dashboard.controller";
+import { DashboardController } from "../presentation/dashboard/dashboard.controller";
 import { DashboardService } from "../application/services/dashboard/dashboard.service";
 import { DashboardRepository } from "../instrastructure/repositories/dashboardRepository";
 

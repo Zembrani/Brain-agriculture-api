@@ -1,4 +1,3 @@
-import { Farm } from "apps/src/domain/farmDomain";
 import {
   CreateProducerDTO,
   Producer,

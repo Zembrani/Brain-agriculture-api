@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDefined, IsNumber, IsString } from "class-validator";
 
 export class Crop {
   id: string;

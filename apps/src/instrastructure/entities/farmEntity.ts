@@ -14,7 +14,7 @@ export class FarmEntity {
 
   @ManyToOne(() => ProducerEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: "producer_id" })
-  producer_id: ProducerEntity;
+  producer_id: ProducerEntity["id"];
 
   @Column()
   name: string;

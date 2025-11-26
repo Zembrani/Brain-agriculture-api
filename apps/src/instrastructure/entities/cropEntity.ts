@@ -14,7 +14,7 @@ export class CropEntity {
 
   @ManyToOne(() => FarmEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: "farm_id" })
-  farm_id: FarmEntity;
+  farm_id: FarmEntity["id"];
 
   @Column({ type: "int" })
   year: number;

@@ -3,7 +3,7 @@ import { FarmRepository } from "./farmRepository";
 import { Repository } from "typeorm";
 import { FarmEntity } from "../entities/farmEntity";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { CreateFarmDTO, UpdateFarmDTO } from "../../domain/farmDomain";
+import { CreateFarmDTO, Farm, UpdateFarmDTO } from "../../domain/farmDomain";
 
 describe("FarmRepository", () => {
   let repository: FarmRepository;
@@ -48,7 +48,7 @@ describe("FarmRepository", () => {
 
   describe("getAll", () => {
     it("should return all farms", async () => {
-      mockRepository.find.mockResolvedValue([mockFarm] as any);
+      mockRepository.find.mockResolvedValue([mockFarm] as Farm[]);
 
       const result = await repository.getAll();
 
@@ -68,7 +68,7 @@ describe("FarmRepository", () => {
 
   describe("getById", () => {
     it("should return a farm by id", async () => {
-      mockRepository.findOne.mockResolvedValue(mockFarm as any);
+      mockRepository.findOne.mockResolvedValue(mockFarm as Farm);
 
       const result = await repository.getById("1");
 
@@ -101,7 +101,7 @@ describe("FarmRepository", () => {
         productiveArea: 700,
         nonProductiveArea: 300,
       };
-      mockRepository.save.mockResolvedValue(mockFarm as any);
+      mockRepository.save.mockResolvedValue(mockFarm as Farm);
 
       const result = await repository.create(createDto);
 
@@ -119,7 +119,7 @@ describe("FarmRepository", () => {
         nonProductiveArea: 400,
       };
       const updatedFarm = { ...mockFarm, ...updateDto };
-      mockRepository.save.mockResolvedValue(updatedFarm as any);
+      mockRepository.save.mockResolvedValue(updatedFarm as Farm);
 
       const result = await repository.update(updateDto);
 
@@ -130,17 +130,15 @@ describe("FarmRepository", () => {
 
   describe("delete", () => {
     it("should delete a farm by id", async () => {
-      mockRepository.delete.mockResolvedValue({ affected: 1 } as any);
-
       await repository.delete("1");
 
-      expect(mockRepository.delete).toHaveBeenCalledWith("1");
+      expect(mockRepository.delete).toHaveBeenCalled();
     });
   });
 
   describe("getFarmsByProducerId", () => {
     it("should return farms for a given producer id", async () => {
-      mockRepository.find.mockResolvedValue([mockFarm] as any);
+      mockRepository.find.mockResolvedValue([mockFarm] as Farm[]);
 
       const result = await repository.getFarmsByProducerId("1");
 

@@ -3,7 +3,7 @@ import { CropRepository } from "./cropRepository";
 import { Repository } from "typeorm";
 import { CropEntity } from "../entities/cropEntity";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { CreateCropDTO } from "../../domain/cropDomain";
+import { CreateCropDTO, Crop } from "../../domain/cropDomain";
 
 describe("CropRepository", () => {
   let repository: CropRepository;
@@ -42,7 +42,7 @@ describe("CropRepository", () => {
 
   describe("getAll", () => {
     it("should return all crops", async () => {
-      mockRepository.find.mockResolvedValue([mockCrop] as any);
+      mockRepository.find.mockResolvedValue([mockCrop] as Crop[]);
 
       const result = await repository.getAll();
 
@@ -67,7 +67,7 @@ describe("CropRepository", () => {
         year: 2023,
         crop: "Corn",
       };
-      mockRepository.save.mockResolvedValue(mockCrop as any);
+      mockRepository.save.mockResolvedValue(mockCrop as Crop);
 
       const result = await repository.create(createDto);
 
