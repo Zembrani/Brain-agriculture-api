@@ -1,13 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { IDashboardRepository } from '../../application/repository/dashboard/dashboard.interface';
-import { Dashboard } from '../../domain/dashboardDomain';
-import { DataSource } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { IDashboardRepository } from "../../application/repository/dashboard/dashboard.interface";
+import { Dashboard } from "../../domain/dashboardDomain";
+import { DataSource } from "typeorm";
 
 @Injectable()
 export class DashboardRepository implements IDashboardRepository {
-  constructor(
-    private readonly dashboardRepository: DataSource
-  ) {}
+  constructor(private readonly dashboardRepository: DataSource) {}
 
   async getDashboard(): Promise<Dashboard[]> {
     const result = await this.dashboardRepository.query(`

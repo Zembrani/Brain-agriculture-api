@@ -1,9 +1,11 @@
-import { Controller, Get, Inject } from '@nestjs/common';
-import type { IDashboardService } from '../application/services/dashboard/dashboard.interface';
+import { Controller, Get, Inject } from "@nestjs/common";
+import type { IDashboardService } from "../application/services/dashboard/dashboard.interface";
 
-@Controller('dashboard')
+@Controller("dashboard")
 export class DashboardController {
-  constructor(@Inject("IDashboardService") private dashboardService: IDashboardService) {}
+  constructor(
+    @Inject("IDashboardService") private dashboardService: IDashboardService,
+  ) {}
 
   @Get()
   async getDashboardData() {

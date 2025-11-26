@@ -1,16 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { IDashboardService } from './dashboard.interface';
+import { Inject, Injectable } from "@nestjs/common";
+import { IDashboardService } from "./dashboard.interface";
 import {
   Dashboard,
   DashboardResponseDTO,
-} from '../../../domain/dashboardDomain';
-import type { IDashboardRepository } from '../../repository/dashboard/dashboard.interface';
+} from "../../../domain/dashboardDomain";
+import type { IDashboardRepository } from "../../repository/dashboard/dashboard.interface";
 
 @Injectable()
 export class DashboardService implements IDashboardService {
   constructor(
-    @Inject('IDashboardRepository')
-    private dashboardRepository: IDashboardRepository
+    @Inject("IDashboardRepository")
+    private dashboardRepository: IDashboardRepository,
   ) {}
 
   async getDashboard(): Promise<DashboardResponseDTO> {
