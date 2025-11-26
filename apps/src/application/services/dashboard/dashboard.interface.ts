@@ -1,5 +1,5 @@
-import { Dashboard } from "../../../domain/dashboardDomain";
+import { DashboardResponseDTO } from "../../../domain/dashboardDomain";
 
 export interface IDashboardService {
-  getDashboard(): Promise<Dashboard[]>;
+  getDashboard(): Promise<DashboardResponseDTO>;
 }
