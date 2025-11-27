@@ -12,9 +12,9 @@ export class DashboardRepository implements IDashboardRepository {
       SELECT
         f.id,
         f.state,
-        f.totalarea,
-        f.productivearea,
-        f.nonproductivearea,
+        f.totalarea as "totalArea",
+        f.productivearea as "productiveArea",
+        f.nonproductivearea as "nonProductiveArea",
         COALESCE(json_agg(
           json_build_object(
             'id', c.id,
@@ -28,6 +28,18 @@ export class DashboardRepository implements IDashboardRepository {
       ORDER BY f.id
     `);
 
-    return result;
+    return result.map((farm) => ({
+      id: farm.id,
+      state: farm.state,
+      totalArea: Number(farm.totalArea),
+      productiveArea: Number(farm.productiveArea),
+      nonProductiveArea: Number(farm.nonProductiveArea),
+      crops: farm.crops.map((crop) => ({
+        id: crop.id,
+        farm_id: farm.id,
+        year: Number(crop.year),
+        crop: crop.crop,
+      })),
+    }));
   }
 }

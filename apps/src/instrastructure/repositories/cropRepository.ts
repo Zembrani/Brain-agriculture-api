@@ -13,7 +13,14 @@ export class CropRepository implements ICropRepository {
   ) {}
 
   async getAll(): Promise<Crop[]> {
-    return await this.cropRepository.find();
+    const crops = await this.cropRepository.find();
+
+    return crops.map((crop) => ({
+      id: crop.id,
+      farm_id: crop.farm_id as string,
+      year: crop.year,
+      crop: crop.crop,
+    }));
   }
 
   async create(data: CreateCropDTO): Promise<Crop> {

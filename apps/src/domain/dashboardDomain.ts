@@ -1,7 +1,11 @@
 import { Crop } from "./cropDomain";
-import { Farm } from "./farmDomain";
 
-export class Dashboard extends Farm {
+export class Dashboard {
+  id: string;
+  state: string;
+  totalArea: number;
+  productiveArea: number;
+  nonProductiveArea: number;
   crops: Crop[];
 }
 

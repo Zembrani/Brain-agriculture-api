@@ -25,9 +25,9 @@ export class DashboardService implements IDashboardService {
     >();
 
     dashboardData.forEach((farm) => {
-      totalArea += farm.totalArea;
-      productiveArea += farm.productiveArea;
-      nonProductiveArea += farm.nonProductiveArea;
+      totalArea += Number(farm.totalArea);
+      productiveArea += Number(farm.productiveArea);
+      nonProductiveArea += Number(farm.nonProductiveArea);
 
       areaByState.set(farm.state, {
         totalArea:

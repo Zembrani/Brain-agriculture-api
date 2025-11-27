@@ -13,7 +13,18 @@ export class FarmRepository implements IFarmRepository {
   ) {}
 
   async getAll(): Promise<Farm[]> {
-    return await this.farmRepository.find();
+    const farms = await this.farmRepository.find();
+
+    return farms.map((farm) => ({
+      id: farm.id,
+      producer_id: farm.producer_id as any,
+      name: farm.name,
+      city: farm.city,
+      state: farm.state,
+      totalArea: farm.totalArea,
+      productiveArea: farm.productiveArea,
+      nonProductiveArea: farm.nonProductiveArea,
+    }));
   }
 
   async getById(id: string): Promise<Farm | undefined> {
@@ -35,10 +46,9 @@ export class FarmRepository implements IFarmRepository {
   }
 
   async getFarmsByProducerId(producerId: string): Promise<Farm[]> {
-    return await this.farmRepository.find({
-      where: {
-        producer_id: producerId,
-      },
-    });
+    return await this.farmRepository
+      .createQueryBuilder("farm")
+      .where("farm.producer_id = :producerId", { producerId })
+      .getMany();
   }
 }
