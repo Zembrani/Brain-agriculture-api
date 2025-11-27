@@ -124,10 +124,61 @@ cd Brain-agriculture-api
 npm install
 ```
 
-3. Start the PostgreSQL database
+3. Configure environment variables
 ```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env with your configuration
+# The default values work with the Docker setup
+```
+
+**Environment Variables:**
+```env
+NODE_ENV=development
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=pguser
+POSTGRES_PASSWORD=secret123
+POSTGRES_DATABASE=agriculture
+POSTGRES_PORT_TEST=5433
+POSTGRES_DATABASE_TEST=agriculture_test
+```
+
+> **Security Note:** 
+> - The `.env` file is gitignored and will not be committed
+> - Docker Compose automatically reads from `.env` file
+> - Never commit sensitive credentials to version control
+> - For production, use strong passwords and secure secrets management
+
+4. Start the PostgreSQL database
+```bash
+# Docker Compose will automatically read variables from .env file
+docker-compose up -d
+
+# Check if containers are running
+docker-compose ps
+```
+
+5. Initialize the database schema
+```bash
+# The init.sql script runs automatically on first container startup
+# To re-initialize, remove the volumes and restart:
+docker-compose down -v
 docker-compose up -d
 ```
+
+6. Run the application
+```bash
+# Development
+npm run start:dev
+
+# Production
+npm run build
+npm run start:prod
+```
+
+The API will be available at `http://localhost:3000`
 
 The database will be initialized with sample data automatically.
 

@@ -338,8 +338,7 @@ describe("Dashboard Domain", () => {
       expect(dashboardResponse.productiveArea).toBe(12000);
       expect(dashboardResponse.nonProductiveArea).toBe(3000);
       expect(
-        dashboardResponse.productiveArea +
-          dashboardResponse.nonProductiveArea,
+        dashboardResponse.productiveArea + dashboardResponse.nonProductiveArea,
       ).toBe(dashboardResponse.totalArea);
     });
 
@@ -352,8 +351,7 @@ describe("Dashboard Domain", () => {
       dashboardResponse.areaByCrop = [];
 
       expect(
-        dashboardResponse.productiveArea +
-          dashboardResponse.nonProductiveArea,
+        dashboardResponse.productiveArea + dashboardResponse.nonProductiveArea,
       ).toBe(dashboardResponse.totalArea);
     });
   });

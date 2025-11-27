@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { DashboardController } from './dashboard.controller';
-import { DashboardResponseDTO } from '../../domain/dashboardDomain';
+import { Test, TestingModule } from "@nestjs/testing";
+import { DashboardController } from "./dashboard.controller";
+import { DashboardResponseDTO } from "../../domain/dashboardDomain";
 
-describe('DashboardController', () => {
+describe("DashboardController", () => {
   let controller: DashboardController;
   const mockDashboardService = {
     getDashboard: jest.fn(),
@@ -14,13 +14,13 @@ describe('DashboardController', () => {
     nonProductiveArea: 1000,
     areaByState: [
       {
-        state: 'SP',
+        state: "SP",
         totalArea: 3000,
         productiveArea: 2500,
         nonProductiveArea: 500,
       },
       {
-        state: 'MG',
+        state: "MG",
         totalArea: 2000,
         productiveArea: 1500,
         nonProductiveArea: 500,
@@ -28,13 +28,13 @@ describe('DashboardController', () => {
     ],
     areaByCrop: [
       {
-        crop: 'Soja',
+        crop: "Soja",
         totalArea: 2000,
         productiveArea: 1800,
         nonProductiveArea: 200,
       },
       {
-        crop: 'Milho',
+        crop: "Milho",
         totalArea: 3000,
         productiveArea: 2200,
         nonProductiveArea: 800,
@@ -49,7 +49,7 @@ describe('DashboardController', () => {
       controllers: [DashboardController],
       providers: [
         {
-          provide: 'IDashboardService',
+          provide: "IDashboardService",
           useValue: mockDashboardService,
         },
       ],
@@ -58,13 +58,15 @@ describe('DashboardController', () => {
     controller = module.get<DashboardController>(DashboardController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getDashboardData', () => {
-    it('should return dashboard data with totals and aggregations', async () => {
-      mockDashboardService.getDashboard.mockResolvedValue(mockDashboardResponse);
+  describe("getDashboardData", () => {
+    it("should return dashboard data with totals and aggregations", async () => {
+      mockDashboardService.getDashboard.mockResolvedValue(
+        mockDashboardResponse,
+      );
 
       const result = await controller.getDashboardData();
 
@@ -75,7 +77,7 @@ describe('DashboardController', () => {
       expect(result.areaByCrop).toHaveLength(2);
     });
 
-    it('should return empty data when no farms exist', async () => {
+    it("should return empty data when no farms exist", async () => {
       const emptyResponse: DashboardResponseDTO = {
         totalArea: 0,
         productiveArea: 0,
@@ -93,13 +95,13 @@ describe('DashboardController', () => {
       expect(result.areaByCrop).toEqual([]);
     });
 
-    it('should handle service errors properly', async () => {
+    it("should handle service errors properly", async () => {
       mockDashboardService.getDashboard.mockRejectedValue(
-        new Error('Database connection failed'),
+        new Error("Database connection failed"),
       );
 
       await expect(controller.getDashboardData()).rejects.toThrow(
-        'Database connection failed',
+        "Database connection failed",
       );
     });
   });
