@@ -17,7 +17,7 @@ export class CropRepository implements ICropRepository {
 
     return crops.map((crop) => ({
       id: crop.id,
-      farm_id: crop.farm_id as string,
+      farm_id: crop.farm_id,
       year: crop.year,
       crop: crop.crop,
     }));

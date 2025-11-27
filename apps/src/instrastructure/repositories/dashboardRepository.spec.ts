@@ -31,7 +31,7 @@ describe("DashboardRepository", () => {
   beforeEach(async () => {
     mockDataSource = {
       query: jest.fn(),
-    } as any;
+    } as unknown as DataSource;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -69,7 +69,7 @@ describe("DashboardRepository", () => {
       await repository.getDashboard();
 
       expect(mockDataSource.query).toHaveBeenCalledTimes(1);
-      const query = mockDataSource.query.mock.calls[0][0] as string;
+      const query = mockDataSource.query.mock.calls[0][0];
 
       expect(query).toContain("SELECT");
       expect(query).toContain("FROM farm f");

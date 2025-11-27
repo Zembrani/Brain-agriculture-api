@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
-import request = require("supertest");
+import request from "supertest";
 import { AppModule } from "./../src/app.module";
 import {
   getNextValidCPF,
@@ -35,7 +35,7 @@ describe("Producer (e2e)", () => {
         await request(app.getHttpServer()).delete(
           `/producer/${createdProducerId}`,
         );
-      } catch (e) {
+      } catch {
         // Ignore errors during cleanup
       }
     }

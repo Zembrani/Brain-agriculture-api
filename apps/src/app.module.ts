@@ -5,7 +5,7 @@ import { FarmModule } from "./modules/farm.module";
 import { CropModule } from "./modules/crop.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DashboardModule } from "./modules/dashboard.module";
-import { LoggerModule } from 'nestjs-pino';
+import { LoggerModule } from "nestjs-pino";
 
 @Module({
   controllers: [],

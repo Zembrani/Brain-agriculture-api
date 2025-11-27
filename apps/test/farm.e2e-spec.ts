@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
-import request = require("supertest");
+import request from "supertest";
 import { AppModule } from "./../src/app.module";
 import { getNextValidCPF, getUniquePhone } from "./test-helpers";
 

@@ -17,7 +17,7 @@ export class FarmRepository implements IFarmRepository {
 
     return farms.map((farm) => ({
       id: farm.id,
-      producer_id: farm.producer_id as any,
+      producer_id: farm.producer_id,
       name: farm.name,
       city: farm.city,
       state: farm.state,
