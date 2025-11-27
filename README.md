@@ -1,98 +1,330 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Brain Agriculture API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A REST API for managing rural producers, farms, and crop data, built as part of the Brain Agriculture technical challenge. This application provides comprehensive farm management capabilities with data validation, area calculations, and analytical dashboards.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Table of Contents
 
-## Description
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [API Endpoints](#api-endpoints)
+- [Running Tests](#running-tests)
+- [Database Schema](#database-schema)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🌾 About the Project
 
-## Project setup
+This application manages the registration of rural producers and their properties, enabling tracking of farm data including areas, locations, and planted crops. It implements robust business validations and provides analytical insights through a comprehensive dashboard.
 
-```bash
-$ npm install
+### Business Requirements Implemented
+
+- ✅ Complete CRUD operations for rural producers
+- ✅ CPF and CNPJ validation
+- ✅ Area validation (ensuring productive + non-productive areas don't exceed total area)
+- ✅ Multi-farm support per producer (0 to many relationship)
+- ✅ Multi-crop tracking per farm with harvest year
+- ✅ Analytical dashboard with aggregated data by state, crop, and land use
+
+## 🚀 Features
+
+### Producer Management
+- Create, read, update, and delete rural producers
+- Validate CPF/CNPJ using official validation algorithms
+- Track producer type (Physical Person or Legal Entity)
+- Calculate total area across all producer's farms
+
+### Farm Management
+- Register farms with location and area details
+- Validate that productive + non-productive areas don't exceed total area
+- Associate farms with producers
+- Track city, state, and area metrics
+
+### Crop Management
+- Register multiple crops per farm
+- Track crops by harvest year
+- Support for various crop types (Soy, Corn, Coffee, Cotton, etc.)
+
+### Dashboard & Analytics
+- Total area registered across all farms
+- Area breakdown by state
+- Area breakdown by crop type
+- Productive vs. non-productive area analysis
+
+## 🛠 Tech Stack
+
+### Core Technologies
+- **Node.js** - JavaScript runtime
+- **TypeScript** - Type-safe JavaScript
+- **NestJS** - Progressive Node.js framework
+- **PostgreSQL** - Relational database
+- **TypeORM** - ORM for database management
+
+### Development & Testing
+- **Jest** - Testing framework
+- **class-validator** - DTO validation
+- **class-transformer** - Object transformation
+- **cpf-cnpj-validator** - Brazilian document validation
+
+### DevOps
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+
+## 🏗 Architecture
+
+The project follows a clean, layered architecture pattern:
+
+```
+apps/src/
+├── domain/              # Domain entities and DTOs
+│   ├── producerDomain.ts
+│   ├── farmDomain.ts
+│   ├── cropDomain.ts
+│   └── dashboardDomain.ts
+├── application/         # Business logic layer
+│   ├── services/        # Service implementations
+│   └── repository/      # Repository interfaces
+├── infrastructure/      # Data access layer
+│   ├── entities/        # TypeORM entities
+│   └── repositories/    # Repository implementations
+├── presentation/        # API layer
+│   ├── producer/        # Producer controller
+│   ├── farm/           # Farm controller
+│   ├── crop/           # Crop controller
+│   └── dashboard/      # Dashboard controller
+└── utils/              # Shared utilities
+    └── validators/      # Custom validators
 ```
 
-## Compile and run the project
+### Design Principles
+- **SOLID** principles for maintainable code
+- **Dependency Injection** for loose coupling
+- **Repository Pattern** for data access abstraction
+- **DTO Pattern** for data transfer and validation
+- **Clean Architecture** for separation of concerns
 
+## 🎯 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- Docker and Docker Compose
+
+### Installation
+
+1. Clone the repository
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone <repository-url>
+cd Brain-agriculture-api
 ```
 
-## Run tests
-
+2. Install dependencies
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+3. Start the PostgreSQL database
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker-compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The database will be initialized with sample data automatically.
 
-## Resources
+4. Start the application
+```bash
+# Development mode with hot reload
+npm run start:dev
 
-Check out a few resources that may come in handy when working with NestJS:
+# Production mode
+npm run build
+npm run start:prod
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+The API will be available at `http://localhost:3000`
 
-## Support
+## 📡 API Endpoints
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Producers
 
-## Stay in touch
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/producer` | List all producers |
+| POST | `/producer` | Create a new producer |
+| PUT | `/producer/:id` | Update a producer |
+| DELETE | `/producer/:id` | Delete a producer |
+| GET | `/producer/:id/total-area` | Get total area of producer's farms |
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Example Request Body (POST/PUT):**
+```json
+{
+  "cpfCnpj": "470.332.457-18",
+  "name": "João Silva",
+  "phone": "(11) 98765-4321",
+  "personType": "FISICA"
+}
+```
 
-## License
+### Farms
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/farm` | List all farms |
+| POST | `/farm` | Create a new farm |
+| PUT | `/farm/:id` | Update a farm |
+| DELETE | `/farm/:id` | Delete a farm |
+
+**Example Request Body (POST/PUT):**
+```json
+{
+  "producer_id": "1",
+  "name": "Fazenda Santa Rita",
+  "city": "Campinas",
+  "state": "SP",
+  "totalArea": 1500,
+  "productiveArea": 1200,
+  "nonProductiveArea": 300
+}
+```
+
+### Crops
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/crop` | List all crops |
+| POST | `/crop` | Register a new crop |
+
+**Example Request Body (POST):**
+```json
+{
+  "farm_id": "1",
+  "year": 2024,
+  "crop": "Soja"
+}
+```
+
+### Dashboard
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/dashboard` | Get dashboard analytics |
+
+**Example Response:**
+```json
+{
+  "totalArea": 17500,
+  "productiveArea": 14950,
+  "nonProductiveArea": 2550,
+  "areaByState": [
+    {
+      "state": "SP",
+      "totalArea": 7300,
+      "productiveArea": 6300,
+      "nonProductiveArea": 1000
+    }
+  ],
+  "areaByCrop": [
+    {
+      "crop": "Soja",
+      "totalArea": 6500,
+      "productiveArea": 5700,
+      "nonProductiveArea": 800
+    }
+  ]
+}
+```
+
+## 🧪 Running Tests
+
+The project includes comprehensive unit tests with high coverage:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:cov
+```
+
+**Test Coverage:**
+- 115 unit tests
+- ~95% code coverage
+- Tests for all services, repositories, and controllers
+
+## 🗄 Database Schema
+
+### Producer Table
+- `id` - Primary key
+- `cpfCnpj` - CPF or CNPJ (validated)
+- `name` - Producer name
+- `phone` - Contact phone
+- `personType` - FISICA or JURIDICA
+
+### Farm Table
+- `id` - Primary key
+- `producer_id` - Foreign key to Producer
+- `name` - Farm name
+- `city` - City location
+- `state` - State (UF)
+- `totalArea` - Total area in hectares
+- `productiveArea` - Productive area in hectares
+- `nonProductiveArea` - Non-productive area in hectares
+
+### Crop Table
+- `id` - Primary key
+- `farm_id` - Foreign key to Farm
+- `year` - Harvest year
+- `crops` - Crop type (Soja, Milho, Café, etc.)
+
+### Relationships
+- One Producer can have many Farms (1:N)
+- One Farm can have many Crops (1:N)
+- Cascade delete enabled
+
+## 📊 Code Quality
+
+- **TypeScript** for type safety
+- **ESLint** for code linting
+- **Prettier** for code formatting
+- **Class-validator** for runtime validation
+- **Jest** for comprehensive testing
+
+## 🔒 Validations
+
+### Business Rules
+1. CPF/CNPJ must be valid according to Brazilian standards
+2. Productive Area + Non-Productive Area ≤ Total Area
+3. All required fields validated with class-validator
+4. Cascade deletion to maintain referential integrity
+
+### Custom Validators
+- `IsCpfCnpj` - Validates Brazilian CPF and CNPJ documents
+- `ValidationArea` - Ensures area sum doesn't exceed total
+
+## 📝 Sample Data
+
+The database is initialized with sample data including:
+- 5 producers (both physical and legal persons)
+- 7 farms across different Brazilian states
+- 15 crop records with various types and years
+
+## 🚧 Future Enhancements
+
+- Swagger/OpenAPI documentation
+- Application Dockerfile
+- Logging system for observability
+- E2E tests
+- Authentication and authorization
+- API rate limiting
+- Pagination for list endpoints
+
+## 📄 License
+
+This project was developed as part of a technical challenge for Brain Agriculture.
+
+---
+
+Built with ❤️ using NestJS and TypeScript
