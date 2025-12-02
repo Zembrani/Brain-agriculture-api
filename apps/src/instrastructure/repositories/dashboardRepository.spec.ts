@@ -10,9 +10,9 @@ describe("DashboardRepository", () => {
     {
       id: "1",
       state: "SP",
-      totalarea: "1500.00",
-      productivearea: "1200.00",
-      nonproductivearea: "300.00",
+      totalArea: "1500.00",
+      productiveArea: "1200.00",
+      nonProductiveArea: "300.00",
       crops: [
         { id: "1", year: 2024, crop: "Soja" },
         { id: "2", year: 2024, crop: "Milho" },
@@ -21,9 +21,9 @@ describe("DashboardRepository", () => {
     {
       id: "2",
       state: "MG",
-      totalarea: "2000.00",
-      productivearea: "1800.00",
-      nonproductivearea: "200.00",
+      totalArea: "2000.00",
+      productiveArea: "1800.00",
+      nonProductiveArea: "200.00",
       crops: [{ id: "3", year: 2024, crop: "Café" }],
     },
   ];
@@ -83,9 +83,9 @@ describe("DashboardRepository", () => {
         {
           id: "1",
           state: "SP",
-          totalarea: "1500.00",
-          productivearea: "1200.00",
-          nonproductivearea: "300.00",
+          totalArea: "1500.00",
+          productiveArea: "1200.00",
+          nonProductiveArea: "300.00",
           crops: [],
         },
       ];
@@ -120,9 +120,9 @@ describe("DashboardRepository", () => {
         {
           id: "1",
           state: "SP",
-          totalarea: "5000.00",
-          productivearea: "4500.00",
-          nonproductivearea: "500.00",
+          totalArea: "5000.00",
+          productiveArea: "4500.00",
+          nonProductiveArea: "500.00",
           crops: [
             { id: "1", year: 2024, crop: "Soja" },
             { id: "2", year: 2024, crop: "Milho" },
@@ -150,9 +150,9 @@ describe("DashboardRepository", () => {
         {
           id: "1",
           state: "SP",
-          totalarea: "1234.56",
-          productivearea: "987.65",
-          nonproductivearea: "246.91",
+          totalArea: "1234.56",
+          productiveArea: "987.65",
+          nonProductiveArea: "246.91",
           crops: [],
         },
       ];
@@ -172,9 +172,9 @@ describe("DashboardRepository", () => {
         {
           id: "1",
           state: "SP",
-          totalarea: "1500.00",
-          productivearea: "1200.00",
-          nonproductivearea: "300.00",
+          totalArea: "1500.00",
+          productiveArea: "1200.00",
+          nonProductiveArea: "300.00",
           crops: null,
         },
       ];

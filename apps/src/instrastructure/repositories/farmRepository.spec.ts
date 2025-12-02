@@ -144,24 +144,30 @@ describe("FarmRepository", () => {
 
   describe("getFarmsByProducerId", () => {
     it("should return farms for a given producer id", async () => {
-      mockRepository.find.mockResolvedValue([mockFarm] as Farm[]);
+      const mockQueryBuilder = mockRepository.createQueryBuilder();
+      mockQueryBuilder.getMany = jest.fn().mockResolvedValue([mockFarm]);
 
       const result = await repository.getFarmsByProducerId("1");
 
-      expect(mockRepository.find).toHaveBeenCalledWith({
-        where: { producer_id: "1" },
-      });
+      expect(mockRepository.createQueryBuilder).toHaveBeenCalledWith("farm");
+      expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+        "farm.producer_id = :producerId",
+        { producerId: "1" },
+      );
       expect(result).toEqual([mockFarm]);
     });
 
     it("should return empty array when no farms found for producer", async () => {
-      mockRepository.find.mockResolvedValue([]);
+      const mockQueryBuilder = mockRepository.createQueryBuilder();
+      mockQueryBuilder.getMany = jest.fn().mockResolvedValue([]);
 
       const result = await repository.getFarmsByProducerId("999");
 
-      expect(mockRepository.find).toHaveBeenCalledWith({
-        where: { producer_id: "999" },
-      });
+      expect(mockRepository.createQueryBuilder).toHaveBeenCalledWith("farm");
+      expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+        "farm.producer_id = :producerId",
+        { producerId: "999" },
+      );
       expect(result).toEqual([]);
     });
   });

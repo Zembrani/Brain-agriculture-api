@@ -1,20 +1,16 @@
 import {
   Column,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProducerEntity } from "./producerEntity";
 
 @Entity("farm")
 export class FarmEntity {
   @PrimaryGeneratedColumn("identity")
   id: string;
 
-  @ManyToOne(() => ProducerEntity, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "producer_id" })
-  producer_id: ProducerEntity["id"];
+  @Column({ name: "producer_id" })
+  producer_id: string;
 
   @Column()
   name: string;
