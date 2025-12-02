@@ -225,7 +225,9 @@ describe("Producer (e2e)", () => {
       );
 
       expect(deleteResponse.status).toBe(200);
-      expect(deleteResponse.text).toContain("deleted succesfully");
+      expect(deleteResponse.body).toEqual({
+        message: `Producer id: ${producerId} deleted succesfully.`,
+      });
     });
   });
 });

@@ -105,7 +105,9 @@ describe("FarmController", () => {
       const result = await controller.delete(genericParam);
 
       expect(mockFarmService.delete).toHaveBeenCalledWith(genericParam.id);
-      expect(result).toBe(`Farm id: ${genericParam.id} deleted succesfully.`);
+      expect(result).toEqual({
+        message: `Farm id: ${genericParam.id} deleted succesfully.`,
+      });
     });
   });
 });

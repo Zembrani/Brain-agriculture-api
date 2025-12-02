@@ -78,9 +78,9 @@ describe("ProducerController", () => {
       const result = await controller.delete(genericParam);
 
       expect(mockProducerService.delete).toHaveBeenCalled();
-      expect(result).toBe(
-        `Producer id: ${genericParam.id} deleted succesfully.`,
-      );
+      expect(result).toEqual({
+        message: `Producer id: ${genericParam.id} deleted succesfully.`,
+      });
     });
   });
 });
