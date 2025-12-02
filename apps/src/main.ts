@@ -2,6 +2,12 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
 import { Logger } from "nestjs-pino";
+import * as crypto from "crypto";
+
+// Polyfill for @nestjs/typeorm crypto issue
+if (!global.crypto) {
+  (global as any).crypto = crypto;
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
