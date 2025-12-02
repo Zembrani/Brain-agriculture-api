@@ -161,10 +161,10 @@ describe("DashboardRepository", () => {
 
       const result = await repository.getDashboard();
 
-      // Query returns strings directly from DB
-      expect(result[0].totalarea).toBe("1234.56");
-      expect(result[0].productivearea).toBe("987.65");
-      expect(result[0].nonproductivearea).toBe("246.91");
+      // Should convert to numbers with precision preserved
+      expect(result[0].totalArea).toBe(1234.56);
+      expect(result[0].productiveArea).toBe(987.65);
+      expect(result[0].nonProductiveArea).toBe(246.91);
     });
 
     it("should handle null crop data correctly", async () => {

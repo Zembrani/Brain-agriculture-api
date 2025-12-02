@@ -21,11 +21,17 @@ describe("FarmRepository", () => {
   };
 
   beforeEach(async () => {
+    const mockQueryBuilder = {
+      where: jest.fn().mockReturnThis(),
+      getMany: jest.fn(),
+    };
+
     const mockRepo = {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
       delete: jest.fn(),
+      createQueryBuilder: jest.fn(() => mockQueryBuilder),
     };
 
     const module: TestingModule = await Test.createTestingModule({

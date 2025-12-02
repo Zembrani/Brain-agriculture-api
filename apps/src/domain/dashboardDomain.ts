@@ -6,7 +6,7 @@ export class Dashboard {
   totalArea: number;
   productiveArea: number;
   nonProductiveArea: number;
-  crops: Crop[];
+  crops: Crop[] | null;
 }
 
 export class DashboardResponseDTO {

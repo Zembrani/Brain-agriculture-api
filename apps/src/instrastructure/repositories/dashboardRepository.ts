@@ -34,12 +34,14 @@ export class DashboardRepository implements IDashboardRepository {
       totalArea: Number(farm.totalArea),
       productiveArea: Number(farm.productiveArea),
       nonProductiveArea: Number(farm.nonProductiveArea),
-      crops: farm.crops.map((crop) => ({
-        id: crop.id,
-        farm_id: farm.id,
-        year: Number(crop.year),
-        crop: crop.crop,
-      })),
+      crops: farm.crops
+        ? farm.crops.map((crop) => ({
+            id: crop.id,
+            farm_id: farm.id,
+            year: Number(crop.year),
+            crop: crop.crop,
+          }))
+        : null,
     }));
   }
 }

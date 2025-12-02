@@ -40,19 +40,21 @@ export class DashboardService implements IDashboardService {
           farm.nonProductiveArea,
       });
 
-      farm.crops.forEach((crop) => {
-        const existing = areaByCrop.get(crop.crop) || {
-          totalArea: 0,
-          productiveArea: 0,
-          nonProductiveArea: 0,
-        };
-        areaByCrop.set(crop.crop, {
-          totalArea: existing.totalArea + farm.totalArea,
-          productiveArea: existing.productiveArea + farm.productiveArea,
-          nonProductiveArea:
-            existing.nonProductiveArea + farm.nonProductiveArea,
+      if (farm.crops) {
+        farm.crops.forEach((crop) => {
+          const existing = areaByCrop.get(crop.crop) || {
+            totalArea: 0,
+            productiveArea: 0,
+            nonProductiveArea: 0,
+          };
+          areaByCrop.set(crop.crop, {
+            totalArea: existing.totalArea + farm.totalArea,
+            productiveArea: existing.productiveArea + farm.productiveArea,
+            nonProductiveArea:
+              existing.nonProductiveArea + farm.nonProductiveArea,
+          });
         });
-      });
+      }
     });
 
     const dashboardReturnData = {
