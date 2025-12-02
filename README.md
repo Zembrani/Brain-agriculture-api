@@ -364,10 +364,7 @@ The database is initialized with sample data including:
 
 ## 🚧 Future Enhancements
 
-- Swagger/OpenAPI documentation
-- Application Dockerfile
-- Logging system for observability
-- E2E tests
+- Metrics for observability
 - Authentication and authorization
 - API rate limiting
 - Pagination for list endpoints
