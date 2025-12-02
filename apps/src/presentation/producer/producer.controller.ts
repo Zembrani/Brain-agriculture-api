@@ -49,9 +49,11 @@ export class ProducerController {
   }
 
   @Delete(":id")
-  async delete(@Param() param: ParamProducerDTO): Promise<string> {
+  async delete(
+    @Param() param: ParamProducerDTO,
+  ): Promise<{ message: string }> {
     await this.producerService.delete(param.id);
 
-    return `Producer id: ${param.id} deleted succesfully.`;
+    return { message: `Producer id: ${param.id} deleted succesfully.` };
   }
 }

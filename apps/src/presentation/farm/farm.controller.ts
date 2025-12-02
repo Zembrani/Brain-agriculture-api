@@ -40,9 +40,9 @@ export class FarmController {
   }
 
   @Delete(":id")
-  async delete(@Param() param: FarmParamDTO): Promise<string> {
+  async delete(@Param() param: FarmParamDTO): Promise<{ message: string }> {
     await this.farmService.delete(param.id);
 
-    return `Farm id: ${param.id} deleted succesfully.`;
+    return { message: `Farm id: ${param.id} deleted succesfully.` };
   }
 }
