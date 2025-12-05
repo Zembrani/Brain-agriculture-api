@@ -57,6 +57,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DATABASE: ${POSTGRES_DATABASE}
       PORT: 3000
+      SERVICE_NAME: brain-agriculture-api
+      OTEL_EXPORTER_OTLP_ENDPOINT: otelcol:4317
+      OTEL_METRIC_EXPORT_INTERVAL: 30000
     ports:
       - '3000:3000'
     depends_on:
@@ -70,6 +73,31 @@ services:
       timeout: 3s
       start_period: 40s
       retries: 3
+
+  otelcol:
+    image: otel/opentelemetry-collector-contrib:0.91.0
+    container_name: otelcol
+    restart: unless-stopped
+    command: ["--config=/etc/otelcol/config.yml"]
+    volumes:
+      - ./otelcol-config.yml:/etc/otelcol/config.yml:ro
+      - ${HOME}/.config/gcloud/application_default_credentials.json:/etc/otel/key.json:ro
+    environment:
+      GOOGLE_CLOUD_PROJECT: ${GCP_PROJECT_ID}
+      GOOGLE_APPLICATION_CREDENTIALS: /etc/otel/key.json
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+      - "13133:13133" # Health check
+      - "8888:8888"   # Prometheus metrics
+    networks:
+      - brain-agriculture
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:13133"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
   pgdata:
