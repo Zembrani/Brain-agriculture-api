@@ -1,0 +1,26 @@
+[Unit]
+Description=OpenTelemetry Collector
+After=network.target
+
+[Service]
+Type=simple
+User=otelcol
+Group=otelcol
+ExecStart=/usr/local/bin/otelcol-contrib --config=/etc/otelcol/config.yml
+
+Restart=on-failure
+RestartSec=5s
+
+# Limites de recursos
+LimitNOFILE=65536
+MemoryLimit=1G
+
+# Segurança
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/otelcol
+
+[Install]
+WantedBy=multi-user.target

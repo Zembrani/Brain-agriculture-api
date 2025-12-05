@@ -1,0 +1,151 @@
+# OpenTelemetry Collector Configuration for GCP
+# Para ser usado em produção com múltiplas APIs Node.js
+
+receivers:
+  # Recebe dados via OTLP (das suas 4 APIs)
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317  # Aceita conexões de qualquer container
+      http:
+        endpoint: 0.0.0.0:4318  # Opcional: HTTP endpoint
+
+processors:
+  # Limita uso de memória do Collector
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 75
+    spike_limit_percentage: 25
+
+  # Agrupa dados em lotes (reduz chamadas ao GCP)
+  batch:
+    send_batch_max_size: 500    # Maior lote = menos chamadas
+    send_batch_size: 500
+    timeout: 10s                # Envia a cada 10s
+
+  # Detecta automaticamente metadados do GCP
+  resourcedetection:
+    detectors: [gcp, env, system]
+    timeout: 10s
+    override: false
+
+  # Adiciona atributos customizados
+  resource:
+    attributes:
+    - key: deployment.environment
+      value: production
+      action: insert
+
+  # Sampling probabilístico (opcional - reduz volume de traces)
+  # Descomentar se receber MUITOS traces
+  # probabilistic_sampler:
+  #   sampling_percentage: 50  # Mantém 50% dos traces
+
+  # Remove atributos sensíveis (opcional)
+  attributes:
+    actions:
+    - key: http.request.header.authorization
+      action: delete
+    - key: http.request.header.cookie
+      action: delete
+
+  # Resolve conflitos de nomes com GCP
+  transform/collision:
+    metric_statements:
+    - context: datapoint
+      statements:
+      - set(attributes["exported_location"], attributes["location"])
+      - delete_key(attributes, "location")
+      - set(attributes["exported_cluster"], attributes["cluster"])
+      - delete_key(attributes, "cluster")
+      - set(attributes["exported_namespace"], attributes["namespace"])
+      - delete_key(attributes, "namespace")
+      - set(attributes["exported_job"], attributes["job"])
+      - delete_key(attributes, "job")
+      - set(attributes["exported_instance"], attributes["instance"])
+      - delete_key(attributes, "instance")
+
+  # Filtra métricas de health checks (opcional)
+  filter/healthcheck:
+    traces:
+      span:
+      - 'attributes["http.target"] == "/health"'
+      - 'attributes["http.target"] == "/metrics"'
+
+exporters:
+  # Exporta para GCP Cloud Trace e Cloud Logging
+  googlecloud:
+    project: ${env:GOOGLE_CLOUD_PROJECT}
+    log:
+      default_log_name: opentelemetry.io/brain-agriculture
+    trace:
+      # Usa Application Default Credentials da VM
+    metric:
+      # Exporta métricas para Cloud Monitoring
+
+  # Exporta métricas para Google Managed Prometheus
+  googlemanagedprometheus:
+    project: ${env:GOOGLE_CLOUD_PROJECT}
+
+  # Logging para debug (desabilitar em produção)
+  logging:
+    verbosity: basic
+    sampling_initial: 5
+    sampling_thereafter: 200
+
+extensions:
+  # Health check do próprio Collector
+  health_check:
+    endpoint: localhost:13133
+
+  # Performance profiling
+  pprof:
+    endpoint: localhost:1777
+
+  # Prometheus metrics do Collector
+  zpages:
+    endpoint: localhost:55679
+
+service:
+  extensions: [health_check, pprof, zpages]
+
+  pipelines:
+    # Pipeline de Traces
+    traces:
+      receivers: [otlp]
+      processors: 
+        - memory_limiter
+        - resourcedetection
+        - resource
+        - filter/healthcheck  # Remove health checks
+        - batch
+      exporters: [googlecloud]
+
+    # Pipeline de Métricas
+    metrics:
+      receivers: [otlp]
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - resource
+        - transform/collision
+        - batch
+      exporters: [googlemanagedprometheus, googlecloud]
+
+    # Pipeline de Logs
+    logs:
+      receivers: [otlp]
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - resource
+        - attributes  # Remove dados sensíveis
+        - batch
+      exporters: [googlecloud]
+
+  # Telemetria do próprio Collector
+  telemetry:
+    logs:
+      level: info
+    metrics:
+      address: localhost:8888
